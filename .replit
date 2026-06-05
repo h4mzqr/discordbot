@@ -26,3 +26,9 @@ externalPort = 80
 [[ports]]
 localPort = 8081
 externalPort = 8081
+
+[userenv]
+
+[userenv.shared]
+DISCORD_BOT_TOKEN = "MTUxMjU3MjQxMDY5ODc5NzI3Nw.G3urJL.qK4GlRWzt18d-aFK50daJj_oJ4Dal3_sbWK0bc"
+DISCORD_CLIENT_ID = "1512572410698797277"
