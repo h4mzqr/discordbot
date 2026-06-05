@@ -26,9 +26,9 @@ export async function handleMessageCreate(message: Message) {
 
   if (!botMentioned && !hasPrefix) return;
 
-  const openai = getOpenAI();
-  if (!openai) {
-    await message.reply("❌ AI özelliği şu an kullanılamıyor. (OPENAI_API_KEY eksik)");
+  const groq = getGroq();
+  if (!groq) {
+    await message.reply("❌ AI özelliği şu an kullanılamıyor. (GROQ_API_KEY eksik)");
     return;
   }
 
@@ -49,8 +49,8 @@ export async function handleMessageCreate(message: Message) {
       await message.channel.sendTyping();
     }
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+    const response = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
       max_tokens: 1000,
       messages: [
         {
@@ -76,7 +76,7 @@ export async function handleMessageCreate(message: Message) {
     }
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : String(err);
-    logger.error({ err }, "OpenAI request failed");
+    logger.error({ err }, "Groq request failed");
     await message.reply(`❌ AI hatası: ${errorMessage.slice(0, 200)}`);
   }
 }
