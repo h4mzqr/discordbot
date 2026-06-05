@@ -69,8 +69,9 @@ export async function handleMessageCreate(message: Message) {
     } else {
       await message.reply(reply);
     }
-  } catch (err) {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
     logger.error({ err }, "OpenAI request failed");
-    await message.reply("❌ Bir hata oluştu, lütfen tekrar deneyin.");
+    await message.reply(`❌ AI hatası: ${errorMessage.slice(0, 200)}`);
   }
 }
