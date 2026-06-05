@@ -1,16 +1,21 @@
 import { Message } from "discord.js";
 import OpenAI from "openai";
-import { OPENAI_API_KEY, AI_PREFIX } from "../config.js";
+import { AI_PREFIX } from "../config.js";
 import { logger } from "../../lib/logger.js";
 
-let openaiClient: OpenAI | null = null;
+const GROQ_API_KEY = process.env["GROQ_API_KEY"];
 
-function getOpenAI(): OpenAI | null {
-  if (!OPENAI_API_KEY) return null;
-  if (!openaiClient) {
-    openaiClient = new OpenAI({ apiKey: OPENAI_API_KEY });
+let groqClient: OpenAI | null = null;
+
+function getGroq(): OpenAI | null {
+  if (!GROQ_API_KEY) return null;
+  if (!groqClient) {
+    groqClient = new OpenAI({
+      apiKey: GROQ_API_KEY,
+      baseURL: "https://api.groq.com/openai/v1",
+    });
   }
-  return openaiClient;
+  return groqClient;
 }
 
 export async function handleMessageCreate(message: Message) {
